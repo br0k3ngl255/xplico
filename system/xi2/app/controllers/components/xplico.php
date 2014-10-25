@@ -153,9 +153,9 @@ class XplicoComponent extends Object
 
 
     function startStopXplico($futureStatus){
-	system("/usr/bin/sudo /usr/bin/killall -9 /opt/xplico/bin/dema > /dev/null 2>&1 &"); 
+	system("sudo killall -9 /opt/xplico/bin/dema > /dev/null 2>&1 &"); 
 	if ($futureStatus == 1) {
-            system ("/usr/bin/sudo /opt/xplico/script/sqlite_demo.sh > /dev/null 2>&1 &");
+            system ("sudo /opt/xplico/script/sqlite_demo.sh > /dev/null 2>&1 &");
         }
         sleep (1);      //Necessary, calling the OS needs some time...	
 	return $this->checkXplicoStatus();
@@ -171,46 +171,46 @@ class XplicoComponent extends Object
     }
 
     function getSqliteVersion() {
-        return exec('/usr/bin/sqlite3 -version');
+        return exec('sqlite3 -version');
     }
 
     function getCakephpVersion() {
         return Configure::version();
     }
     function getApacheVersion() {
-        $ver = exec('/usr/bin/httpd -v | grep version | cut -b 24,25,26,27,28,29,30');
+        $ver = exec('httpd -v | grep version | cut -b 24,25,26,27,28,29,30');
         if (empty($ver))
             $ver = exec('httpd -v | grep version | cut -b 24,25,26,27,28,29,30');
 	return $ver;
     }
 
     function getPHPVersion() {
-        $ver = exec('/usr/bin/php -v | grep PHP | grep built | cut -b 5,6,7,8,9 ');
+        $ver = exec('php -v | grep PHP | grep built | cut -b 5,6,7,8,9 ');
         if (empty($ver))
             $ver = exec('php -v | grep PHP | grep built | cut -b 5,6,7,8,9 ');
 	return $ver;
     }
 
     function gettcpdumpVersion() {
-        return exec('/usr/bin/tcpdump -V 2> /tmp/output.tcpdump.txt ; cat /tmp/output.tcpdump.txt  | grep tcpdump | grep version | cut -b 17,18,19,20,21 ; rm output.tcpdump.txt ');
+        return exec('tcpdump -V 2> /tmp/output.tcpdump.txt ; cat /tmp/output.tcpdump.txt  | grep tcpdump | grep version | cut -b 17,18,19,20,21 ; rm output.tcpdump.txt ');
     }
     
     function getTsharkVersion() {
-        return exec('/usr/bin/tshark -v | grep TShark |  cut -b 8,9,10,11,12');
+        return exec('tshark -v | grep TShark |  cut -b 8,9,10,11,12');
     }
 
     function getlameVersion() {
-        $ver = exec('/usr/bin/lame -V 2> /tmp/output.lame.txt ; cat /tmp/output.lame.txt  | grep version | cut -b 21,22,23,24,25,26,27 ; rm output.lame.txt ');
+        $ver = exec('lame -V 2> /tmp/output.lame.txt ; cat /tmp/output.lame.txt  | grep version | cut -b 21,22,23,24,25,26,27 ; rm output.lame.txt ');
         if (empty($ver))
             $ver = exec('lame -V 2> /tmp/output.lame.txt ; cat /tmp/output.lame.txt  | grep version | cut -b 21,22,23,24,25,26,27 ; rm output.lame.txt ');
         return $ver;
     }
 
     function getGNULinuxVersion() {
-	    $GNU_L_V=exec('/usr/bin/lsb_release -i | cut -b 17,18,19,20,21,21,22,23,24,25,26');
+	    $GNU_L_V=exec('lsb_release -i | cut -b 17,18,19,20,21,21,22,23,24,25,26');
         if (!empty($GNU_L_V)) {
-            $GNU_L_V=$GNU_L_V.exec('/usr/bin/lsb_release -r | cut -b 9,10,11,12,13,14,15,16,17');
-            $GNU_L_V=$GNU_L_V.exec('/usr/bin/lsb_release -c | cut -b 10,11,12,13,14,15,16,17');
+            $GNU_L_V=$GNU_L_V.exec('lsb_release -r | cut -b 9,10,11,12,13,14,15,16,17');
+            $GNU_L_V=$GNU_L_V.exec('lsb_release -c | cut -b 10,11,12,13,14,15,16,17');
         }
         else {
             $GNU_L_V=exec('uname -r');
@@ -222,7 +222,7 @@ class XplicoComponent extends Object
 	return exec('cat /proc/version | cut -b 15,16,17,18,19,20,21,22,23');	}
 
     function getLibPCAPVersion() {
-	return exec ('/usr/bin/tcpdump -V 2> /tmp/output.libpcap.txt ; cat /tmp/output.libpcap.txt  | grep libpcap | grep version | cut -b 17,18,19,20,21 ; rm output.libpcap.txt ');   	}
+	return exec ('tcpdump -V 2> /tmp/output.libpcap.txt ; cat /tmp/output.libpcap.txt  | grep libpcap | grep version | cut -b 17,18,19,20,21 ; rm output.libpcap.txt ');   	}
 
     function getxplicoAlertsVersion() {
 	if (file_exists('/opt/xplico/bin/xplicoAlerts')) {
@@ -233,19 +233,19 @@ class XplicoComponent extends Object
 	}
 
     function getRecodeVersion() {
-        return exec ('/usr/bin/recode --version  |  grep "recode" | cut -b 13,14,15,16 ');
+        return exec ('recode --version  |  grep "recode" | cut -b 13,14,15,16 ');
     }
 
     function getPythonVersion() {
-        return exec ('/usr/bin/python3 --version 2> /tmp/output.python.version.txt ; cat /tmp/output.python.version.txt | cut -b 8,9,10,11,12,13; rm /tmp/output.python.version.txt;');
+        return exec ('python3 --version 2> /tmp/output.python.version.txt ; cat /tmp/output.python.version.txt | cut -b 8,9,10,11,12,13; rm /tmp/output.python.version.txt;');
     }
 
     function getSoxVersion() {
-        return exec ('/usr/bin/sox --version  | cut -b 20,21,22,23,24,25,26,27');
+        return exec ('sox --version  | cut -b 20,21,22,23,24,25,26,27');
     }
 
     function getVideosnarfVersion() {
-        return exec ('/usr/bin/videosnarf | grep Starting | cut -b 20,21,22,23,24,25,26,27');
+        return exec ('videosnarf | grep Starting | cut -b 20,21,22,23,24,25,26,27');
     }
 
     function isChecksumValidationActivated() {
@@ -277,8 +277,8 @@ class XplicoComponent extends Object
     }
     
     function GhostPDLVersion() {
-        if (file_exists('/usr/bin/pcl6')) {
-            return exec ('/usr/bin/pcl6 2>| grep Version | cut -b 10,11,12,13'); }
+        if (file_exists('pcl6')) {
+            return exec ('pcl6 2>| grep Version | cut -b 10,11,12,13'); }
        else {
            return __("Not installed", true); }  //Suggestion: put here a link of a 'how-to install it'
     }

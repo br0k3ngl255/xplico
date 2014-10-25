@@ -110,37 +110,11 @@ class Dispatcher extends Object {
 		}
 		$this->here = $this->base . '/' . $url;
 
-                /* xplico: we disable cache to avoid proxy error 
 		if ($this->asset($url) || $this->cached($url)) {
 			return;
 		}
-                */
-                /* xplico step 1: proxy implementation */
-                $bheader = $_SERVER['HTTP_HOST'];
-                if (empty($this->params['controller']) || $this->params['controller'] == 'http:' ||
-                    (stripos($bheader, $_SERVER['SERVER_ADDR']) === false &&
-                     stripos($bheader, 'localhost') === false && stripos($bheader, 'demo.xplico.org') === false)) {
-                    if (strstr($_SERVER['REQUEST_URI'], '/webs/hijacking/') !== false) {
-                        $this->params['controller'] = 'webs';
-                        $this->params['action'] = 'hijacking';
-                    }
-                    else {
-                        $this->params['controller'] = 'webs';
-                        $this->params['action'] = 'view';
-                    }
-                }
-                
-                /* end xplico step 1 */
 		$controller =& $this->__getController();
 
-                /* xplico step 2 */ 
-                if (!is_object($controller)) {
-                    $this->params['controller'] = 'webs';
-                    $this->params['action'] = 'view';
-                    $controller =& $this->__getController();
-                }
-                /* xplico: end */
-                
 		if (!is_object($controller)) {
 			Router::setRequestInfo(array($this->params, array('base' => $this->base, 'webroot' => $this->webroot)));
 			return $this->cakeError('missingController', array(array(

@@ -142,7 +142,7 @@ class SolsController extends AppController {
                 }
                 else {
                     $interface = array();
-                    $foca = popen('/usr/bin/ifconfig -s | grep Iface --invert-match | cut -b -9', 'r');
+                    $foca = popen('ifconfig -s | grep Iface --invert-match | cut -b -6', 'r');
                     if ($foca) {
                         while (!feof($foca)) {
                             $buffer = trim(fgets($foca, 200));
