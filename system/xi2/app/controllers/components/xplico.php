@@ -241,7 +241,7 @@ class XplicoComponent extends Object
     }
 
     function getSoxVersion() {
-        return exec ('sox --version  | cut -b 20,21,22,23,24,25,26,27');
+        return exec ('sox --version  | cut -c 16-21');
     }
 
     function getVideosnarfVersion() {
