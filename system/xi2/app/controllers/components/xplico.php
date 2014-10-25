@@ -171,7 +171,7 @@ class XplicoComponent extends Object
     }
 
     function getSqliteVersion() {
-        return exec('sqlite3 -version');
+        return exec('sqlite3 --version | cut -c 1-6');
     }
 
     function getCakephpVersion() {
@@ -196,7 +196,7 @@ class XplicoComponent extends Object
     }
     
     function getTsharkVersion() {
-        return exec('tshark -v | grep TShark |  cut -b 8,9,10,11,12');
+        return exec('tshark -v | grep TShark |  cut -c 8-13');
     }
 
     function getlameVersion() {
@@ -219,7 +219,8 @@ class XplicoComponent extends Object
     }
     
     function getKernelVersion() {
-	return exec('cat /proc/version | cut -b 15,16,17,18,19,20,21,22,23');	}
+	return exec('uname -r | cut -c 1-6');	
+    }
 
     function getLibPCAPVersion() {
 	return exec ('tcpdump -V 2> /tmp/output.libpcap.txt ; cat /tmp/output.libpcap.txt  | grep libpcap | grep version | cut -b 17,18,19,20,21 ; rm output.libpcap.txt ');   	}
@@ -245,7 +246,11 @@ class XplicoComponent extends Object
     }
 
     function getVideosnarfVersion() {
-        return exec ('videosnarf | grep Starting | cut -b 20,21,22,23,24,25,26,27');
+	if (file_exists('videosnarf')) {
+            return exec ('videosnarf | grep Starting | cut -b 20,21,22,23,24,25,26,27'); }
+	else {
+	    return __("Not installed", true); }
+        
     }
 
     function isChecksumValidationActivated() {
